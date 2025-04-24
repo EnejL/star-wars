@@ -6,6 +6,20 @@
       </v-col>
     </v-row>
 
+    <!-- Search -->
+    <v-row>
+      <v-col cols="12" md="6" class="mx-auto">
+        <v-text-field
+          v-model="search"
+          label="Search starships"
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          clearable
+          @update:model-value="filterStarships"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
     <v-row v-if="loading">
       <v-col cols="12" class="text-center">
         <v-progress-circular
@@ -29,7 +43,7 @@
 
     <v-row v-else>
       <v-col
-        v-for="starship in starships"
+        v-for="starship in filteredStarships"
         :key="starship.url"
         cols="12"
         sm="6"
@@ -42,23 +56,6 @@
           @click="$router.push(`/starships/${getStarshipId(starship.url)}`)"
         >
           <v-card-title>{{ starship.name }}</v-card-title>
-
-          <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Model</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.model }}</v-list-item-subtitle>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Manufacturer</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.manufacturer }}</v-list-item-subtitle>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Starship Class</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.starship_class }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
 
           <v-card-actions>
             <v-btn
@@ -86,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStarshipsStore } from '@/stores/starships'
 import { storeToRefs } from 'pinia'
 
@@ -94,8 +91,30 @@ const store = useStarshipsStore()
 const { starships, loading, error, totalCount, currentPage, itemsPerPage } = storeToRefs(store)
 const { fetchStarships } = store
 
+// Search state
+const search = ref('')
+
+// Filtered starships
+const filteredStarships = computed(() => {
+  return starships.value.filter(starship => {
+    const matchesSearch = search.value
+      ? starship.name.toLowerCase().includes(search.value.toLowerCase())
+      : true
+
+    return matchesSearch
+  })
+})
+
 function getStarshipId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
+}
+
+function filterStarships() {
+  // Reset to first page when filtering
+  if (currentPage.value !== 1) {
+    currentPage.value = 1
+    fetchStarships(1)
+  }
 }
 
 onMounted(() => {

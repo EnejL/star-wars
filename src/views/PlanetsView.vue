@@ -6,6 +6,20 @@
       </v-col>
     </v-row>
 
+    <!-- Search -->
+    <v-row>
+      <v-col cols="12" md="6" class="mx-auto">
+        <v-text-field
+          v-model="search"
+          label="Search planets"
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          clearable
+          @update:model-value="filterPlanets"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
     <v-row v-if="loading">
       <v-col cols="12" class="text-center">
         <v-progress-circular
@@ -29,7 +43,7 @@
 
     <v-row v-else>
       <v-col
-        v-for="planet in planets"
+        v-for="planet in filteredPlanets"
         :key="planet.url"
         cols="12"
         sm="6"
@@ -42,23 +56,6 @@
           @click="$router.push(`/planets/${getPlanetId(planet.url)}`)"
         >
           <v-card-title>{{ planet.name }}</v-card-title>
-
-          <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Climate</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.climate }}</v-list-item-subtitle>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Terrain</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.terrain }}</v-list-item-subtitle>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Population</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.population }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
 
           <v-card-actions>
             <v-btn
@@ -86,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { usePlanetsStore } from '@/stores/planets'
 import { storeToRefs } from 'pinia'
 
@@ -94,8 +91,30 @@ const store = usePlanetsStore()
 const { planets, loading, error, totalCount, currentPage, itemsPerPage } = storeToRefs(store)
 const { fetchPlanets } = store
 
+// Search state
+const search = ref('')
+
+// Filtered planets
+const filteredPlanets = computed(() => {
+  return planets.value.filter(planet => {
+    const matchesSearch = search.value
+      ? planet.name.toLowerCase().includes(search.value.toLowerCase())
+      : true
+
+    return matchesSearch
+  })
+})
+
 function getPlanetId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
+}
+
+function filterPlanets() {
+  // Reset to first page when filtering
+  if (currentPage.value !== 1) {
+    currentPage.value = 1
+    fetchPlanets(1)
+  }
 }
 
 onMounted(() => {
