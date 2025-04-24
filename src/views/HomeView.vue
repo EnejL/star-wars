@@ -1,5 +1,7 @@
 <script setup lang="ts">
-// No additional setup needed for the home view
+import peopleImage from '@/assets/images/people.png'
+import spaceStationImage from '@/assets/images/space-station.png'
+import aircraftImage from '@/assets/images/aircraft.png'
 </script>
 
 <template>
@@ -19,9 +21,9 @@
           @click="$router.push('/characters')"
         >
           <v-img
-            src="https://images.unsplash.com/photo-1533619043865-1f0c0b5b0b5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            :src="peopleImage"
             height="200"
-            cover
+            contain
           ></v-img>
 
           <v-card-title>Characters</v-card-title>
@@ -49,9 +51,9 @@
           @click="$router.push('/planets')"
         >
           <v-img
-            src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            :src="spaceStationImage"
             height="200"
-            cover
+            contain
           ></v-img>
 
           <v-card-title>Planets</v-card-title>
@@ -79,9 +81,9 @@
           @click="$router.push('/starships')"
         >
           <v-img
-            src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            :src="aircraftImage"
             height="200"
-            cover
+            contain
           ></v-img>
 
           <v-card-title>Starships</v-card-title>
