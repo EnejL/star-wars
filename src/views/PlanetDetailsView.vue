@@ -1,0 +1,157 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <v-btn
+          color="primary"
+          variant="text"
+          @click="$router.push('/planets')"
+          class="mb-4"
+        >
+          <v-icon start>mdi-arrow-left</v-icon>
+          Back to Planets
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="loading">
+      <v-col cols="12" class="text-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="64"
+        ></v-progress-circular>
+      </v-col>
+    </v-row>
+
+    <v-row v-else-if="error">
+      <v-col cols="12" class="text-center">
+        <v-alert
+          type="error"
+          variant="tonal"
+        >
+          {{ error }}
+        </v-alert>
+      </v-col>
+    </v-row>
+
+    <v-row v-else-if="planet">
+      <v-col cols="12" md="6">
+        <v-card>
+          <v-card-title class="text-h4">{{ planet.name }}</v-card-title>
+
+          <v-card-text>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>Diameter</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.diameter }} km</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Rotation Period</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.rotation_period }} hours</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Orbital Period</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.orbital_period }} days</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Gravity</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.gravity }}</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Population</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.population }}</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Climate</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.climate }}</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Terrain</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.terrain }}</v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Surface Water</v-list-item-title>
+                <v-list-item-subtitle>{{ planet.surface_water }}%</v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="6">
+        <v-card>
+          <v-card-title class="text-h5">Additional Information</v-card-title>
+
+          <v-card-text>
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>Residents</v-list-item-title>
+                <v-list-item-subtitle>
+                  <v-chip
+                    v-for="resident in planet.residents"
+                    :key="resident"
+                    class="ma-1"
+                    color="primary"
+                    variant="outlined"
+                    @click="$router.push(`/characters/${getCharacterId(resident)}`)"
+                  >
+                    Character {{ getCharacterId(resident) }}
+                  </v-chip>
+                </v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title>Films</v-list-item-title>
+                <v-list-item-subtitle>
+                  <v-chip
+                    v-for="film in planet.films"
+                    :key="film"
+                    class="ma-1"
+                    color="primary"
+                    variant="outlined"
+                  >
+                    Film {{ getFilmId(film) }}
+                  </v-chip>
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { usePlanetsStore } from '@/stores/planets'
+import { storeToRefs } from 'pinia'
+import type { Planet } from '@/types/star-wars'
+
+const route = useRoute()
+const store = usePlanetsStore()
+const { loading, error } = storeToRefs(store)
+const planet = ref<Planet | null>(null)
+
+function getCharacterId(url: string): string {
+  return url.split('/').filter(Boolean).pop() || ''
+}
+
+function getFilmId(url: string): string {
+  return url.split('/').filter(Boolean).pop() || ''
+}
+
+onMounted(async () => {
+  const id = route.params.id as string
+  planet.value = await store.fetchPlanetById(id)
+})
+</script> 
