@@ -39,6 +39,11 @@ const router = createRouter({
       name: 'starship-details',
       component: () => import('../views/StarshipDetailsView.vue'),
     },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('../views/FavoritesView.vue'),
+    },
   ],
 })
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import FavoritesButton from '@/components/FavoritesButton.vue'
 
 const navigationItems = [
   { title: 'Characters', path: '/characters' },
@@ -43,6 +44,8 @@ const navigationItems = [
         Data provided by <a href="https://swapi.tech/" target="_blank" class="text-white">SWAPI</a>
       </div>
     </v-footer>
+
+    <FavoritesButton />
   </v-app>
 </template>
 

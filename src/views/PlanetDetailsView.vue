@@ -38,7 +38,17 @@
     <v-row v-else-if="planet">
       <v-col cols="12" md="6">
         <v-card>
-          <v-card-title class="text-h4">{{ planet.name }}</v-card-title>
+          <v-card-title class="d-flex align-center">
+            {{ planet.name }}
+            <v-spacer></v-spacer>
+            <v-btn
+              :color="isFavorite ? 'error' : 'grey'"
+              variant="text"
+              @click="toggleFavorite"
+            >
+              <v-icon>{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+            </v-btn>
+          </v-card-title>
 
           <v-card-text>
             <v-list>
@@ -131,16 +141,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePlanetsStore } from '@/stores/planets'
+import { useFavoritesStore } from '@/stores/favorites'
 import { storeToRefs } from 'pinia'
 import type { Planet } from '@/types/star-wars'
 
 const route = useRoute()
-const store = usePlanetsStore()
-const { loading, error } = storeToRefs(store)
+const planetsStore = usePlanetsStore()
+const favoritesStore = useFavoritesStore()
+const { loading, error } = storeToRefs(planetsStore)
 const planet = ref<Planet | null>(null)
+
+const isFavorite = computed(() => {
+  if (!planet.value) return false
+  return favoritesStore.isFavorite(getPlanetId(planet.value.url), 'planet')
+})
+
+function getPlanetId(url: string): string {
+  return url.split('/').filter(Boolean).pop() || ''
+}
 
 function getCharacterId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
@@ -150,8 +171,22 @@ function getFilmId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
 }
 
+function toggleFavorite() {
+  if (!planet.value) return
+  const id = getPlanetId(planet.value.url)
+  if (isFavorite.value) {
+    favoritesStore.removeFavorite(id, 'planet')
+  } else {
+    favoritesStore.addFavorite({
+      id,
+      type: 'planet',
+      data: planet.value
+    })
+  }
+}
+
 onMounted(async () => {
   const id = route.params.id as string
-  planet.value = await store.fetchPlanetById(id)
+  planet.value = await planetsStore.fetchPlanetById(id)
 })
 </script> 

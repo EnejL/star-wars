@@ -38,7 +38,17 @@
     <v-row v-else-if="starship">
       <v-col cols="12" md="6">
         <v-card>
-          <v-card-title class="text-h4">{{ starship.name }}</v-card-title>
+          <v-card-title class="d-flex align-center">
+            {{ starship.name }}
+            <v-spacer></v-spacer>
+            <v-btn
+              :color="isFavorite ? 'error' : 'grey'"
+              variant="text"
+              @click="toggleFavorite"
+            >
+              <v-icon>{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+            </v-btn>
+          </v-card-title>
 
           <v-card-text>
             <v-list>
@@ -146,16 +156,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStarshipsStore } from '@/stores/starships'
+import { useFavoritesStore } from '@/stores/favorites'
 import { storeToRefs } from 'pinia'
 import type { Starship } from '@/types/star-wars'
 
 const route = useRoute()
-const store = useStarshipsStore()
-const { loading, error } = storeToRefs(store)
+const starshipsStore = useStarshipsStore()
+const favoritesStore = useFavoritesStore()
+const { loading, error } = storeToRefs(starshipsStore)
 const starship = ref<Starship | null>(null)
+
+const isFavorite = computed(() => {
+  if (!starship.value) return false
+  return favoritesStore.isFavorite(getStarshipId(starship.value.url), 'starship')
+})
+
+function getStarshipId(url: string): string {
+  return url.split('/').filter(Boolean).pop() || ''
+}
 
 function getCharacterId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
@@ -165,8 +186,22 @@ function getFilmId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
 }
 
+function toggleFavorite() {
+  if (!starship.value) return
+  const id = getStarshipId(starship.value.url)
+  if (isFavorite.value) {
+    favoritesStore.removeFavorite(id, 'starship')
+  } else {
+    favoritesStore.addFavorite({
+      id,
+      type: 'starship',
+      data: starship.value
+    })
+  }
+}
+
 onMounted(async () => {
   const id = route.params.id as string
-  starship.value = await store.fetchStarshipById(id)
+  starship.value = await starshipsStore.fetchStarshipById(id)
 })
 </script> 

@@ -38,7 +38,17 @@
     <v-row v-else-if="character">
       <v-col cols="12" md="6">
         <v-card>
-          <v-card-title class="text-h4">{{ character.name }}</v-card-title>
+          <v-card-title class="d-flex align-center">
+            {{ character.name }}
+            <v-spacer></v-spacer>
+            <v-btn
+              :color="isFavorite ? 'error' : 'grey'"
+              variant="text"
+              @click="toggleFavorite"
+            >
+              <v-icon>{{ isFavorite ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+            </v-btn>
+          </v-card-title>
 
           <v-card-text>
             <v-list>
@@ -154,15 +164,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCharactersStore } from '@/stores/characters'
+import { useFavoritesStore } from '@/stores/favorites'
+import { storeToRefs } from 'pinia'
 import type { Character } from '@/types/star-wars'
 
 const route = useRoute()
-const store = useCharactersStore()
-const { loading, error } = storeToRefs(store)
+const charactersStore = useCharactersStore()
+const favoritesStore = useFavoritesStore()
+const { loading, error } = storeToRefs(charactersStore)
 const character = ref<Character | null>(null)
+
+const isFavorite = computed(() => {
+  if (!character.value) return false
+  return favoritesStore.isFavorite(getCharacterId(character.value.url), 'character')
+})
+
+function getCharacterId(url: string): string {
+  return url.split('/').filter(Boolean).pop() || ''
+}
 
 function getPlanetId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
@@ -180,8 +202,22 @@ function getVehicleId(url: string): string {
   return url.split('/').filter(Boolean).pop() || ''
 }
 
+function toggleFavorite() {
+  if (!character.value) return
+  const id = getCharacterId(character.value.url)
+  if (isFavorite.value) {
+    favoritesStore.removeFavorite(id, 'character')
+  } else {
+    favoritesStore.addFavorite({
+      id,
+      type: 'character',
+      data: character.value
+    })
+  }
+}
+
 onMounted(async () => {
   const id = route.params.id as string
-  character.value = await store.fetchCharacterById(id)
+  character.value = await charactersStore.fetchCharacterById(id)
 })
 </script> 
