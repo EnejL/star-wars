@@ -36,7 +36,7 @@
     </v-row>
 
     <v-row v-else-if="character">
-      <v-col cols="12" md="6">
+      <v-col cols="12" class="mx-auto">
         <v-card>
           <v-card-title class="d-flex align-center">
             {{ character.name }}
@@ -51,111 +51,50 @@
           </v-card-title>
 
           <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Birth Year</v-list-item-title>
-                <v-list-item-subtitle>{{ character.birth_year }}</v-list-item-subtitle>
-              </v-list-item>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Birth Year</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.birth_year }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Gender</v-list-item-title>
-                <v-list-item-subtitle>{{ character.gender }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Gender</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.gender }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Height</v-list-item-title>
-                <v-list-item-subtitle>{{ character.height }} cm</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Height</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.height }} cm</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Mass</v-list-item-title>
-                <v-list-item-subtitle>{{ character.mass }} kg</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Mass</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.mass }} kg</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
 
-              <v-list-item>
-                <v-list-item-title>Eye Color</v-list-item-title>
-                <v-list-item-subtitle>{{ character.eye_color }}</v-list-item-subtitle>
-              </v-list-item>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Eye Color</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.eye_color }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Hair Color</v-list-item-title>
-                <v-list-item-subtitle>{{ character.hair_color }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Hair Color</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.hair_color }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Skin Color</v-list-item-title>
-                <v-list-item-subtitle>{{ character.skin_color }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="6">
-        <v-card>
-          <v-card-title class="text-h5">Additional Information</v-card-title>
-
-          <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Homeworld</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-btn
-                    variant="text"
-                    color="primary"
-                    @click="$router.push(`/planets/${getPlanetId(character.homeworld)}`)"
-                  >
-                    View Homeworld
-                  </v-btn>
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-title>Films</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="film in character.films"
-                    :key="film"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                  >
-                    Film {{ getFilmId(film) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-title>Starships</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="starship in character.starships"
-                    :key="starship"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                    @click="$router.push(`/starships/${getStarshipId(starship)}`)"
-                  >
-                    Starship {{ getStarshipId(starship) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-title>Vehicles</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="vehicle in character.vehicles"
-                    :key="vehicle"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                  >
-                    Vehicle {{ getVehicleId(vehicle) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
+                  <v-list-item>
+                    <v-list-item-title>Skin Color</v-list-item-title>
+                    <v-list-item-subtitle>{{ character.skin_color }}</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>

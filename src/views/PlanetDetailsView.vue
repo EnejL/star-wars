@@ -36,7 +36,7 @@
     </v-row>
 
     <v-row v-else-if="planet">
-      <v-col cols="12" md="6">
+      <v-col cols="12" class="mx-auto">
         <v-card>
           <v-card-title class="d-flex align-center">
             {{ planet.name }}
@@ -51,88 +51,55 @@
           </v-card-title>
 
           <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Diameter</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.diameter }} km</v-list-item-subtitle>
-              </v-list-item>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Diameter</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.diameter }} km</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Rotation Period</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.rotation_period }} hours</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Rotation Period</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.rotation_period }} hours</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Orbital Period</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.orbital_period }} days</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Orbital Period</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.orbital_period }} days</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Gravity</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.gravity }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Gravity</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.gravity }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Population</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.population }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Population</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.population }}</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
 
-              <v-list-item>
-                <v-list-item-title>Climate</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.climate }}</v-list-item-subtitle>
-              </v-list-item>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Climate</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.climate }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Terrain</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.terrain }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Terrain</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.terrain }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Surface Water</v-list-item-title>
-                <v-list-item-subtitle>{{ planet.surface_water }}%</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="6">
-        <v-card>
-          <v-card-title class="text-h5">Additional Information</v-card-title>
-
-          <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Residents</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="resident in planet.residents"
-                    :key="resident"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                    @click="$router.push(`/characters/${getCharacterId(resident)}`)"
-                  >
-                    Character {{ getCharacterId(resident) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-title>Films</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="film in planet.films"
-                    :key="film"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                  >
-                    Film {{ getFilmId(film) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
+                  <v-list-item>
+                    <v-list-item-title>Surface Water</v-list-item-title>
+                    <v-list-item-subtitle>{{ planet.surface_water }}%</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>

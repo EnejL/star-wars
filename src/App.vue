@@ -36,14 +36,14 @@ const navigationItems = [
       <router-view></router-view>
     </v-main>
 
-    <v-footer app class="bg-primary text-center d-flex flex-column">
+    <!-- <v-footer app class="bg-primary text-center d-flex flex-column">
       <div>
         <strong>Star Wars Explorer</strong> - Explore the vast universe of Star Wars
       </div>
       <div class="text-caption">
         Data provided by <a href="https://swapi.tech/" target="_blank" class="text-white">SWAPI</a>
       </div>
-    </v-footer>
+    </v-footer> -->
 
     <FavoritesButton />
   </v-app>

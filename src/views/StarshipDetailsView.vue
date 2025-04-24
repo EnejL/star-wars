@@ -36,7 +36,7 @@
     </v-row>
 
     <v-row v-else-if="starship">
-      <v-col cols="12" md="6">
+      <v-col cols="12" class="mx-auto">
         <v-card>
           <v-card-title class="d-flex align-center">
             {{ starship.name }}
@@ -51,103 +51,70 @@
           </v-card-title>
 
           <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Model</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.model }}</v-list-item-subtitle>
-              </v-list-item>
+            <v-row>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Model</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.model }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Manufacturer</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.manufacturer }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Manufacturer</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.manufacturer }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Cost in Credits</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.cost_in_credits }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Cost in Credits</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.cost_in_credits }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Length</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.length }} meters</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Length</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.length }} meters</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Crew</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.crew }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Crew</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.crew }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Passengers</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.passengers }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Passengers</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.passengers }}</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
 
-              <v-list-item>
-                <v-list-item-title>Cargo Capacity</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.cargo_capacity }} kg</v-list-item-subtitle>
-              </v-list-item>
+              <v-col cols="12" sm="6">
+                <v-list>
+                  <v-list-item>
+                    <v-list-item-title>Cargo Capacity</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.cargo_capacity }} kg</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Consumables</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.consumables }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Consumables</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.consumables }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Hyperdrive Rating</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.hyperdrive_rating }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>Hyperdrive Rating</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.hyperdrive_rating }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>MGLT</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.MGLT }}</v-list-item-subtitle>
-              </v-list-item>
+                  <v-list-item>
+                    <v-list-item-title>MGLT</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.MGLT }}</v-list-item-subtitle>
+                  </v-list-item>
 
-              <v-list-item>
-                <v-list-item-title>Starship Class</v-list-item-title>
-                <v-list-item-subtitle>{{ starship.starship_class }}</v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <v-col cols="12" md="6">
-        <v-card>
-          <v-card-title class="text-h5">Additional Information</v-card-title>
-
-          <v-card-text>
-            <v-list>
-              <v-list-item>
-                <v-list-item-title>Pilots</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="pilot in starship.pilots"
-                    :key="pilot"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                    @click="$router.push(`/characters/${getCharacterId(pilot)}`)"
-                  >
-                    Character {{ getCharacterId(pilot) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item>
-                <v-list-item-title>Films</v-list-item-title>
-                <v-list-item-subtitle>
-                  <v-chip
-                    v-for="film in starship.films"
-                    :key="film"
-                    class="ma-1"
-                    color="primary"
-                    variant="outlined"
-                  >
-                    Film {{ getFilmId(film) }}
-                  </v-chip>
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
+                  <v-list-item>
+                    <v-list-item-title>Starship Class</v-list-item-title>
+                    <v-list-item-subtitle>{{ starship.starship_class }}</v-list-item-subtitle>
+                  </v-list-item>
+                </v-list>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
