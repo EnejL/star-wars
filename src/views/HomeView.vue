@@ -13,10 +13,10 @@ import aircraftImage from '@/assets/images/aircraft.png'
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-col cols="12" md="4">
+    <v-row class="fill-height">
+      <v-col cols="12" md="4" class="d-flex">
         <v-card
-          class="mx-auto"
+          class="mx-auto flex-grow-1"
           max-width="400"
           @click="$router.push('/characters')"
         >
@@ -28,7 +28,7 @@ import aircraftImage from '@/assets/images/aircraft.png'
 
           <v-card-title>Characters</v-card-title>
 
-          <v-card-text>
+          <v-card-text class="flex-grow-1">
             Discover the heroes, villains, and everything in between from the Star Wars universe. Learn about their backgrounds, affiliations, and adventures.
           </v-card-text>
 
@@ -44,9 +44,9 @@ import aircraftImage from '@/assets/images/aircraft.png'
         </v-card>
       </v-col>
 
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="d-flex">
         <v-card
-          class="mx-auto"
+          class="mx-auto flex-grow-1"
           max-width="400"
           @click="$router.push('/planets')"
         >
@@ -58,7 +58,7 @@ import aircraftImage from '@/assets/images/aircraft.png'
 
           <v-card-title>Planets</v-card-title>
 
-          <v-card-text>
+          <v-card-text class="flex-grow-1">
             Journey through the diverse worlds of the Star Wars galaxy. From desert planets to ice worlds, explore the unique characteristics of each location.
           </v-card-text>
 
@@ -74,9 +74,9 @@ import aircraftImage from '@/assets/images/aircraft.png'
         </v-card>
       </v-col>
 
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="4" class="d-flex">
         <v-card
-          class="mx-auto"
+          class="mx-auto flex-grow-1"
           max-width="400"
           @click="$router.push('/starships')"
         >
@@ -88,7 +88,7 @@ import aircraftImage from '@/assets/images/aircraft.png'
 
           <v-card-title>Starships</v-card-title>
 
-          <v-card-text>
+          <v-card-text class="flex-grow-1">
             Examine the impressive fleet of starships that traverse the galaxy. From small fighters to massive capital ships, learn about their capabilities and history.
           </v-card-text>
 
@@ -106,3 +106,15 @@ import aircraftImage from '@/assets/images/aircraft.png'
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.v-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.v-card-text {
+  flex-grow: 1;
+}
+</style>

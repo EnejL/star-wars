@@ -1,33 +1,49 @@
-# star-wars
+# Star Wars Explorer
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue.js application that allows users to explore the Star Wars universe through its characters, planets, and starships. The application uses the SWAPI (Star Wars API) to fetch and display data about the Star Wars universe.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Browse Star Wars characters, planets, and starships
+- Search functionality for each category
+- Detailed view for each item
+- Favorites system to save preferred items
+- Responsive design that works on all devices
+- Dark theme with modern UI
 
-## Type Support for `.vue` Imports in TS
+## Technologies Used
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- Vue.js 3
+- TypeScript
+- Vuetify 3
+- Pinia for state management
+- Vue Router for navigation
+- SWAPI for data
 
-## Customize configuration
+## Prerequisites
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Node.js (version 16 or higher)
+- npm (comes with Node.js)
 
-## Project Setup
+## Setup Instructions
 
-```sh
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd star-wars
+```
+
+2. Install dependencies:
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+3. Start the development server:
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+4. Build for production:
+```bash
 npm run build
 ```
